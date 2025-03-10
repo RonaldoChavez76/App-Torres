@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 
-const carreraSchema = new mongoose.Schema({
-  nombreCarrera: String,
-  especialidades: [
-    {
-      nombreEspecialidad: String,
-      materias: [{ nombreMateria: String }]
-    }
-  ]
+const CarreraSchema = new mongoose.Schema({
+  nombreCarrera: { type: String },
+  especialidades: [{
+    nombreEspecialidad: { type: String },
+    materias: [{
+      nombreMateria: { type: String }
+    }]
+  }]
 });
 
-const Carrera = mongoose.model('Carrera', carreraSchema);
-module.exports = Carrera;
+module.exports = mongoose.model('Carrera', CarreraSchema);

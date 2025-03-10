@@ -1,42 +1,43 @@
 const mongoose = require('mongoose');
 
-const estudianteSchema = new mongoose.Schema({
-  matriculaEstudiante: String,
-  nombreCompleto: String,
-  fechaAlta: Date,
-  fechaNacimiento: Date,
-  sexo: String,
-  telefonos: [String],
-  correos: [String],
-  rfc: String,
+const EstudianteSchema = new mongoose.Schema({
+  apellidoPaterno:{type: String, required: true},
+  semestre: { type:Number, require: true},
+  matriculaEstudiante: { type: String, required: true },
+  nombreCompleto: { type: String, required: true },
+  fechaAlta: { type: Date, default: Date.now },
+  fechaNacimiento: { type: Date },
+  sexo: { type: String, enum: ['M', 'F'] },
+  telefonos: [{ type: String }],
+  correos: [{ type: String }],
+  rfc: { type: String },
   domicilio: {
-    calle: String,
-    numeroInterior: String,
-    numeroExterior: String,
-    colonia: String,
-    codigoPostal: String,
-    ciudad: String
+    calle: { type: String },
+    numeroInterior: { type: String },
+    numeroExterior: { type: String },
+    colonia: { type: String },
+    codigoPostal: { type: String },
+    ciudad: { type: String }
   },
-  promedioBachillerato: Number,
-  especialidadBachillerato: String,
-  foto: String,
+  promedioBachillerato: { type: Number },
+  especialidadBachillerato: { type: String },
+  foto: { type: String },
   tutores: [{
-    nombreCompleto: String,
-    telefonos: [String],
-    correos: [String]
+    nombreCompleto: { type: String },
+    domicilio: {
+      calle: { type: String },
+      numeroInterior: { type: String },
+      numeroExterior: { type: String },
+      colonia: { type: String },
+      codigoPostal: { type: String },
+      ciudad: { type: String }
+    },
+    telefonos: [{ type: String }],
+    correos: [{ type: String }]
   }],
-  carrera: String,
-  especialidadCursar: String,
-  certificadoBachillerato: Number,
-
-  //Agregamos el campo de cursos inscritos
-  cursosInscritos: [{
-    nombreCurso: String,
-    codigoCurso: String,
-    profesor: String,
-    horario: String
-  }]
+  carrera: { type: String },
+  especialidadCursar: { type: String },
+  certificadoBachillerato: { type: Number }
 });
 
-const Estudiante = mongoose.model('Estudiante', estudianteSchema);
-module.exports = Estudiante;
+module.exports = mongoose.model('Estudiante', EstudianteSchema);

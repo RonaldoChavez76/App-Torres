@@ -7,6 +7,8 @@ const productoRoutes = require('./routes/productoRoutes');
 const estudianteRoutes = require('./routes/estudianteRoutes');
 const profesorRoutes = require('./routes/profesorRoutes');
 const errorHandler = require('./middleware/errorHandler');
+const logMiddleware = require('./middleware/logMiddleware');
+const routes = require('./routes/index');
 
 const app = express();
 app.use(express.json()); //para poder recibir datos en formato JSON
@@ -18,8 +20,9 @@ app.use(cors());
 // Conexión a MongoDB
 connectDB();
 
-// Rutas de productos fue de prueba
-app.use('/api/productos', productoRoutes);
+
+app.use('/api', routes);
+
 
 //Rutas de estudiantes
 app.use('/api/estudiantes', estudianteRoutes);
@@ -33,3 +36,8 @@ app.use(errorHandler);
 // Arranque del servidor
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Servidor corriendo en el puerto ${port}`));
+
+
+
+app.use(logMiddleware);
+
