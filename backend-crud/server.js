@@ -4,9 +4,12 @@ const cors = require('cors');
 
 const connectDB = require('./config/database');
 const productoRoutes = require('./routes/productoRoutes');
+const estudianteRoutes = require('./routes/estudianteRoutes');
+const profesorRoutes = require('./routes/profesorRoutes');
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
+app.use(express.json()); //para poder recibir datos en formato JSON
 
 // Middlewares
 app.use(bodyParser.json());
@@ -15,8 +18,14 @@ app.use(cors());
 // Conexión a MongoDB
 connectDB();
 
-// Rutas
+// Rutas de productos fue de prueba
 app.use('/api/productos', productoRoutes);
+
+//Rutas de estudiantes
+app.use('/api/estudiantes', estudianteRoutes);
+
+// Rutas de profesores de actividades extracurriculares
+app.use('/api/profesores', profesorRoutes);
 
 // Middleware de manejo de errores
 app.use(errorHandler);
