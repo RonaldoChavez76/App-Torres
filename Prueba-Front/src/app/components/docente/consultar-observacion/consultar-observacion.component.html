@@ -1,0 +1,46 @@
+<h2>Consultar Observaciones</h2>
+
+<label>Selecciona una materia:</label>
+<select [(ngModel)]="materiaSeleccionada" (change)="obtenerEstudiantes()">
+  <option *ngFor="let materia of materias" [value]="materia.nombreMateria">
+    {{ materia.nombreMateria }}
+  </option>
+</select>
+
+<label>Selecciona un estudiante:</label>
+<select [(ngModel)]="estudianteSeleccionado">
+  <option *ngFor="let estudiante of estudiantes" [value]="estudiante.matriculaEstudiante">
+    {{ estudiante.nombreCompleto }}
+  </option>
+</select>
+
+<button (click)="consultarObservaciones()">Consultar Observaciones</button>
+
+<!-- Mostrar observaciones -->
+<div *ngIf="observaciones.length > 0">
+  <h3>Observaciones del Estudiante</h3>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Materia</th>
+        <th>Semestre</th>
+        <th>Año</th>
+        <th>Descripción</th>
+        <th>Fecha de Registro</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let obs of observaciones">
+        <td>{{ obs.asignatura }}</td>
+        <td>{{ obs.semestre }}</td>
+        <td>{{ obs.anio }}</td>
+        <td>{{ obs.descripcion }}</td>
+        <td>{{ obs.createdAt | date:'short' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="observaciones.length === 0">
+  <p>No se encontraron observaciones para este estudiante.</p>
+</div>

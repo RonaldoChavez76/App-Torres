@@ -37,7 +37,8 @@ const EstudianteSchema = new mongoose.Schema({
   }],
   carrera: { type: String },
   especialidadCursar: { type: String },
-  certificadoBachillerato: { type: Number }
+  certificadoBachillerato: { type: Number },
+  eliminado: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model('Estudiante', EstudianteSchema);

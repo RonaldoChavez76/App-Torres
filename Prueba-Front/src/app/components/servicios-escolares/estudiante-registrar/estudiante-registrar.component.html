@@ -1,0 +1,108 @@
+<form [formGroup]="estudianteForm" (ngSubmit)="submitForm()">
+  <h3>Registro de Estudiante</h3>
+
+  <label>Nombre Completo:</label>
+  <input formControlName="nombreCompleto" required>
+
+  <label>Apellido Paterno:</label>
+  <input formControlName="apellidoPaterno" required>
+
+  <label>Carrera:</label>
+  <input formControlName="carrera" required>
+
+  <label>Matrícula:</label>
+  <input formControlName="matriculaEstudiante">
+
+  <label>Semestre:</label>
+  <input type="number" formControlName="semestre" required>
+
+  <label>Promedio Bachillerato:</label>
+  <input type="number" formControlName="promedioBachillerato" step="0.1" required>
+
+  <label>Fecha de Nacimiento:</label>
+  <input type="date" formControlName="fechaNacimiento" required>
+
+  <label>Sexo:</label>
+  <select formControlName="sexo" required>
+    <option value="M">Masculino</option>
+    <option value="F">Femenino</option>
+  </select>
+
+  <label>RFC:</label>
+  <input formControlName="rfc">
+
+  <fieldset formGroupName="domicilio">
+    <legend>Domicilio</legend>
+    <label>Calle:</label>
+    <input formControlName="calle">
+    <label>Número Interior:</label>
+    <input formControlName="numeroInterior">
+    <label>Número Exterior:</label>
+    <input formControlName="numeroExterior">
+    <label>Colonia:</label>
+    <input formControlName="colonia">
+    <label>Código Postal:</label>
+    <input formControlName="codigoPostal">
+    <label>Ciudad:</label>
+    <input formControlName="ciudad">
+  </fieldset>
+
+  <!-- Sección para Teléfonos del Estudiante -->
+  <h4>Teléfonos del Estudiante</h4>
+  <div formArrayName="telefonos">
+    <div *ngFor="let tel of telefonos.controls; let i = index">
+      <input [formControlName]="i" placeholder="Teléfono">
+      <button type="button" (click)="eliminarTelefono(i)">Eliminar</button>
+    </div>
+  </div>
+  <button type="button" (click)="agregarTelefono()">Agregar Teléfono</button>
+
+  <!-- Sección para Correos del Estudiante -->
+  <h4>Correos del Estudiante</h4>
+  <div formArrayName="correos">
+    <div *ngFor="let correo of correos.controls; let i = index">
+      <input [formControlName]="i" placeholder="Correo">
+      <button type="button" (click)="eliminarCorreo(i)">Eliminar</button>
+    </div>
+  </div>
+  <button type="button" (click)="agregarCorreo()">Agregar Correo</button>
+
+  <!-- Sección para Tutores (ya existente) -->
+  <h4>Tutores</h4>
+  <div formArrayName="tutores">
+    <div *ngFor="let tutor of tutores.controls; let i = index" [formGroupName]="i">
+      <label>Nombre del Tutor {{i + 1}}:</label>
+      <input formControlName="nombreCompleto" required>
+
+      <fieldset formGroupName="domicilio">
+        <legend>Domicilio</legend>
+        <label>Calle:</label>
+        <input formControlName="calle">
+        <label>Número Interior:</label>
+        <input formControlName="numeroInterior">
+        <label>Número Exterior:</label>
+        <input formControlName="numeroExterior">
+        <label>Colonia:</label>
+        <input formControlName="colonia">
+        <label>Código Postal:</label>
+        <input formControlName="codigoPostal">
+        <label>Ciudad:</label>
+        <input formControlName="ciudad">
+      </fieldset>
+
+      <label>Teléfonos:</label>
+      <input formControlName="telefonos">
+
+      <label>Correos:</label>
+      <input formControlName="correos">
+
+      <button type="button" (click)="eliminarTutor(i)">Eliminar Tutor</button>
+    </div>
+  </div>
+  <button type="button" (click)="agregarTutor()">Agregar Tutor</button>
+
+  <label>Foto:</label>
+  <input type="file" (change)="onFileChange($event)">
+
+  <button type="submit">Registrar Estudiante</button>
+</form>

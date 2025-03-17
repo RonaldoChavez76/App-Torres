@@ -1,0 +1,45 @@
+<!-- src/app/components/estudiante-search/estudiante-search.component.html -->
+<div class="search-container">
+  <h2>Buscar Estudiante</h2>
+  <form (ngSubmit)="buscarEstudiantes()">
+    <input type="text" [(ngModel)]="nombre" name="nombre" placeholder="Nombre del Estudiante" />
+    <input type="text" [(ngModel)]="carrera" name="carrera" placeholder="Carrera" />
+    <input type="text" [(ngModel)]="matriculaEstudiante" name="matricula" placeholder="Matrícula" />
+    <button type="submit">Buscar</button>
+    <!-- Botón que redirige a la página de registro de estudiante -->
+<button [routerLink]="['/registrar-estudiante']">Registrar nuevo alumno</button>
+
+  </form>
+
+  <div *ngIf="estudiantes.length > 0">
+    <h3>Resultados</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre Completo</th>
+          <th>Carrera</th>
+          <th>Matrícula</th>
+          <th>Semestre</th>
+          <th>Promedio</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let estudiante of estudiantes">
+          <td>{{ estudiante.nombreCompleto }}</td>
+          <td>{{ estudiante.carrera }}</td>
+          <td>{{ estudiante.matriculaEstudiante }}</td>
+          <td>{{ estudiante.semestre }}</td>
+          <td>{{ estudiante.promedioBachillerato }}</td>
+          <td>
+            <button (click)="verInformacion(estudiante)">Ver Información</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="estudiantes.length === 0">
+    <p>No se encontraron estudiantes.</p>
+  </div>
+</div>

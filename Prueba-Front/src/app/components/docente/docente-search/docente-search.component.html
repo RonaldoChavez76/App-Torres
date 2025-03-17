@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h2>Buscar Docente</h2>
+
+    <!-- Buscar docentes -->
+    <input type="text" [(ngModel)]="filtro" placeholder="Buscar docente..." />
+
+    <select [(ngModel)]="docenteSeleccionado">
+        <option *ngFor="let docente of docentes | filterDocentes: filtro" [value]="docente._id">
+            {{ docente.nombre }}
+        </option>
+    </select>
+
+    <!-- Botón para agregar observación -->
+    <button (click)="cargarMaterias()">Agregar Observación</button>
+
+    <!-- Botón para consultar observaciones -->
+    <button (click)="consultarObservaciones()">Consultar Observaciones</button>
+
+</body>
+</html>

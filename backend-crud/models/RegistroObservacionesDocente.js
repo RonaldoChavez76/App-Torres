@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
 
 const ObservacionSchema = new mongoose.Schema({
-  docente: { type: String, required: true }, // Nombre del docente
-  asignatura: { type: String, required: true }, // Asignatura que enseña
-  semestre: { type: String, required: true }, // Semestre en que se registró la observación
-  año: { type: Number, required: true }, // Año en que se registró la observación
-  descripcion: { type: String, required: true }, // Descripción de la observación
-  matriculaEstudiante: { type: String, ref: 'Estudiante', required: true } // Relación con el estudiante
+  docente: { type: mongoose.Schema.Types.ObjectId, ref: 'Docente', required: true }, // Relación con la colección Docente
+  asignatura: { type: String, required: true }, // Asignatura que enseña el docente
+  semestre: { type: Number, enum: [1, 2], required: true }, // Semestre (1 o 2)
+  anio: { type: Number, required: true },  // "anio" en lugar de "año"
+  descripcion: { type: String, required: true }, // Observación realizada
+  matriculaEstudiante: { type: mongoose.Schema.Types.ObjectId, ref: 'Estudiante', required: true }, // Relación con Estudiante
+  createdAt: { type: Date, default: Date.now } // Fecha de creación automática
 });
 
+// Crear el modelo y exportarlo
 module.exports = mongoose.model('Observacion', ObservacionSchema);

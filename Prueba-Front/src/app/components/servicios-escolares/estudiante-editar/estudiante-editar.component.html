@@ -1,0 +1,90 @@
+<div *ngIf="estudiante">
+  <h3>Editar Estudiante</h3>
+  <form (ngSubmit)="guardarCambios()">
+    <!-- Campos básicos del estudiante -->
+    <label>Nombre Completo:</label>
+    <input [(ngModel)]="estudiante.nombreCompleto" name="nombreCompleto" required />
+
+    <label>Carrera:</label>
+    <input [(ngModel)]="estudiante.carrera" name="carrera" required />
+
+    <label>Matrícula:</label>
+    <input [(ngModel)]="estudiante.matriculaEstudiante" name="matriculaEstudiante" disabled />
+
+    <label>Semestre:</label>
+    <input [(ngModel)]="estudiante.semestre" name="semestre" required />
+
+    <label>Promedio Bachillerato:</label>
+    <input [(ngModel)]="estudiante.promedioBachillerato" name="promedioBachillerato" type="number" step="0.1" required />
+
+    <label>Fecha de Nacimiento:</label>
+    <input [(ngModel)]="estudiante.fechaNacimiento" name="fechaNacimiento" type="date" required />
+
+    <label>Sexo:</label>
+    <select [(ngModel)]="estudiante.sexo" name="sexo" required>
+      <option value="M">Masculino</option>
+      <option value="F">Femenino</option>
+    </select>
+
+    <label>RFC:</label>
+    <input [(ngModel)]="estudiante.rfc" name="rfc" />
+
+    <!-- Domicilio -->
+    <h4>Domicilio</h4>
+    <label>Calle:</label>
+    <input [(ngModel)]="estudiante.domicilio.calle" name="domicilioCalle" />
+
+    <label>Número Interior:</label>
+    <input [(ngModel)]="estudiante.domicilio.numeroInterior" name="domicilioNumeroInterior" />
+
+    <label>Número Exterior:</label>
+    <input [(ngModel)]="estudiante.domicilio.numeroExterior" name="domicilioNumeroExterior" />
+
+    <label>Colonia:</label>
+    <input [(ngModel)]="estudiante.domicilio.colonia" name="domicilioColonia" />
+
+    <label>Código Postal:</label>
+    <input [(ngModel)]="estudiante.domicilio.codigoPostal" name="domicilioCodigoPostal" />
+
+    <label>Ciudad:</label>
+    <input [(ngModel)]="estudiante.domicilio.ciudad" name="domicilioCiudad" />
+
+    <!-- Tutores -->
+    <h4>Tutores</h4>
+    <div *ngFor="let tutor of estudiante.tutores; let i = index">
+      <label>Nombre del Tutor {{i + 1}}:</label>
+      <input [(ngModel)]="tutor.nombreCompleto" name="tutorNombreCompleto{{i}}" />
+
+      <label>Calle del Tutor:</label>
+      <input [(ngModel)]="tutor.domicilio.calle" name="tutorCalle{{i}}" />
+
+      <label>Número Interior del Tutor:</label>
+      <input [(ngModel)]="tutor.domicilio.numeroInterior" name="tutorNumeroInterior{{i}}" />
+
+      <label>Número Exterior del Tutor:</label>
+      <input [(ngModel)]="tutor.domicilio.numeroExterior" name="tutorNumeroExterior{{i}}" />
+
+      <label>Colonia del Tutor:</label>
+      <input [(ngModel)]="tutor.domicilio.colonia" name="tutorColonia{{i}}" />
+
+      <label>Código Postal del Tutor:</label>
+      <input [(ngModel)]="tutor.domicilio.codigoPostal" name="tutorCodigoPostal{{i}}" />
+
+      <label>Ciudad del Tutor:</label>
+      <input [(ngModel)]="tutor.domicilio.ciudad" name="tutorCiudad{{i}}" />
+
+      <label>Teléfonos del Tutor:</label>
+      <input [(ngModel)]="tutor.telefonos" name="tutorTelefonos{{i}}" />
+
+      <label>Correos del Tutor:</label>
+      <input [(ngModel)]="tutor.correos" name="tutorCorreos{{i}}" />
+    </div>
+
+    <!-- Foto -->
+    <label>Foto:</label>
+    <input [(ngModel)]="estudiante.foto" name="foto" type="file" />
+
+    <!-- Botón para guardar los cambios -->
+    <button type="submit" [disabled]="isSubmitting">Guardar Cambios</button>
+  </form>
+</div>

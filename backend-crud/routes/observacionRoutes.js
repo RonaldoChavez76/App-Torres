@@ -12,6 +12,9 @@ router.get('/estudiantes/:docenteId', observacionController.obtenerEstudiantesPo
 router.post('/registrar', observacionController.registrarObservacion);
 
 // Consultar observaciones hechas al estudiante por el docente
-router.get('/consultar/:docenteId/:estudianteId', observacionController.consultarObservaciones);
+router.get('/consultar/:docenteId/:matriculaEstudiante', observacionController.consultarObservaciones);
+
+// Obtener lista de docentes con filtro opcional por nombre
+router.get('/docentes', observacionController.obtenerDocentes);
 
 module.exports = router;

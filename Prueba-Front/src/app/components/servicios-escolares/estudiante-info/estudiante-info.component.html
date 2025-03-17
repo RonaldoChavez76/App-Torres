@@ -1,0 +1,26 @@
+<div *ngIf="estudiante">
+  <h3>Información del Estudiante</h3>
+  
+  <!-- Mostrar la foto del estudiante con tamaño ajustado -->
+  <div *ngIf="estudiante.foto">
+    <img [src]="'http://localhost:3000/' + estudiante.foto" alt="Foto del estudiante" style="max-width: 200px; max-height: 200px; object-fit: cover;">
+  </div>
+
+
+  <p><strong>Nombre Completo:</strong> {{ estudiante.nombreCompleto }}</p>
+  <p><strong>Carrera:</strong> {{ estudiante.carrera }}</p>
+  <p><strong>Matrícula:</strong> {{ estudiante.matriculaEstudiante }}</p>
+  <p><strong>Semestre:</strong> {{ estudiante.semestre }}</p>
+  <p><strong>Promedio Bachillerato:</strong> {{ estudiante.promedioBachillerato }}</p>
+  
+  <!-- Botón para ir al formulario de edición -->
+  <button (click)="actualizarInformacion()">Actualizar Información</button>
+  
+  <!-- Botones para eliminación -->
+  <button (click)="eliminarDefinitivamente()">Baja Definitiva</button>
+  <button (click)="eliminarTemporalmente()">Baja Temporal</button>
+</div>
+
+<div *ngIf="!estudiante">
+  <p>Cargando la información del estudiante...</p>
+</div>
