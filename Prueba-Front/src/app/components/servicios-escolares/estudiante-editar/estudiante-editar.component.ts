@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { EstudianteService } from '../../../services/estudiante.service';
+import { ServiciosEscolaresService } from '../../../services/servicios-escolares.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -12,7 +12,7 @@ export class EstudianteEditarComponent {
   isSubmitting = false;  // Variable para controlar el estado de envío
 
   constructor(
-    private estudianteService: EstudianteService,
+    private estudianteService: ServiciosEscolaresService,
     private route: ActivatedRoute,
     private router: Router
   ) {}

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { EstudianteService } from '../../../services/estudiante.service';
+import { ServiciosEscolaresService } from '../../../services/servicios-escolares.service';
 import { Router } from '@angular/router';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -13,7 +13,7 @@ export class EstudianteRegistrarComponent {
   estudianteForm: FormGroup;
   foto: File | null = null;
 
-  constructor(private fb: FormBuilder, private estudianteService: EstudianteService, private router: Router) {
+  constructor(private fb: FormBuilder, private estudianteService: ServiciosEscolaresService, private router: Router) {
     this.estudianteForm = this.fb.group({
       nombreCompleto: ['', Validators.required],
       apellidoPaterno: ['', Validators.required],

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { EstudianteService } from '../../../services/estudiante.service';
+import { ServiciosEscolaresService } from '../../../services/servicios-escolares.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,7 +13,7 @@ export class EstudianteSearchComponent {
   matriculaEstudiante: string = '';
   estudiantes: any[] = [];
 
-  constructor(private estudianteService: EstudianteService, private router: Router) {}
+  constructor(private estudianteService: ServiciosEscolaresService, private router: Router) {}
 
   // Método para buscar estudiantes por nombre, carrera o matrícula
   buscarEstudiantes() {
