@@ -12,6 +12,12 @@ import { DocenteSearchComponent } from './components/docente/docente-search/doce
 import { FilterDocentesPipe } from './pipes/filter-docentes.pipe';
 import { CrearObservacionComponent } from './components/docente/crear-observacion/crear-observacion.component';
 import { ConsultarObservacionComponent } from './components/docente/consultar-observacion/consultar-observacion.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HomeComponent } from './pages/home/home.component';
+import { ProfesoresComponent } from './pages/profesores/profesores.component';
+import { EstudiantesComponent } from './pages/estudiantes/estudiantes.component';
+import { ActividadesComponent } from './pages/actividades/actividades.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +29,13 @@ import { ConsultarObservacionComponent } from './components/docente/consultar-ob
     DocenteSearchComponent,
     FilterDocentesPipe,
     CrearObservacionComponent,
-    ConsultarObservacionComponent
+    ConsultarObservacionComponent,
+    NavbarComponent,
+    FooterComponent,
+    HomeComponent,
+    ProfesoresComponent,
+    EstudiantesComponent,
+    ActividadesComponent
   ],
   imports: [
     BrowserModule,

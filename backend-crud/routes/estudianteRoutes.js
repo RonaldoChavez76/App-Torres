@@ -16,5 +16,10 @@ router.get('/materias/:matricula', estudianteController.consultarMaterias);
 // Consultar todas las actividades asignadas a un estudiante
 router.get('/actividades/:matricula', estudianteController.consultarActividades);
 
+// Ruta para obtener todos los estudiantes
+router.get('/todos', estudianteController.obtenerEstudiantes); 
+
+
+
 
 module.exports = router;

@@ -1,7 +1,8 @@
 const ProfesorActividades = require('../models/ProfesorActividades');
-const ActividadAsignada = require('../models/ActividadAsignada');
+const ActividadAsignada = require('../models/ActividadAsignada'); // Asegúrate de que este modelo apunte a 'actividadesAsignadas'
 const Estudiante = require('../models/Estudiante');
 
+// Registrar actividad extracurricular para un alumno
 exports.registrarActividad = async (req, res) => {
     try {
         const { nombreProfesor, matriculaEstudiante, nombreActividad, resultado } = req.body;
@@ -39,10 +40,11 @@ exports.registrarActividad = async (req, res) => {
             resultado: resultado || "Pendiente"
         };
 
+        // Ahora insertamos la actividad en la colección actividadesAsignadas
         await ActividadAsignada.updateOne(
             { matriculaEstudiante },
             { $push: { actividades: nuevaActividad } },
-            { upsert: true }
+            { upsert: true }  // Crea un nuevo documento si no existe para ese estudiante
         );
 
         res.status(201).json({ mensaje: "Actividad registrada correctamente", actividad: nuevaActividad });
@@ -52,8 +54,8 @@ exports.registrarActividad = async (req, res) => {
     }
 };
 
-
-  exports.cargarActividades = async (req, res) => {
+// Cargar actividades disponibles del profesor
+exports.cargarActividades = async (req, res) => {
     try {
         const { nombreProfesor } = req.params;
 
@@ -77,8 +79,7 @@ exports.registrarActividad = async (req, res) => {
     }
 };
 
-
-
+// Buscar estudiante por matrícula o nombre
 exports.buscarEstudiante = async (req, res) => {
     try {
         const { filtro } = req.params; // Puede ser matrícula o nombre
@@ -102,5 +103,57 @@ exports.buscarEstudiante = async (req, res) => {
     } catch (error) {
         console.error("Error en la consulta:", error);
         res.status(500).json({ error: "Error interno al buscar estudiante." });
+    }
+};
+
+// Obtener todos los profesores
+exports.obtenerProfesores = async (req, res) => {
+    try {
+        const profesores = await ProfesorActividades.find({}, { nombreProfesor: 1, _id: 0 });
+
+        if (!profesores || profesores.length === 0) {
+            return res.status(404).json({ error: "No se encontraron profesores." });
+        }
+
+        res.status(200).json(profesores);
+    } catch (error) {
+        console.error("Error al obtener los profesores:", error);
+        res.status(500).json({ error: "Error interno al obtener los profesores." });
+    }
+};
+
+exports.actualizarEstatus = async (req, res) => {
+    try {
+        const { matriculaEstudiante, nombreActividad, estatus } = req.body;
+
+        // Asegurarse de que 'matriculaEstudiante' es un string
+        if (typeof matriculaEstudiante !== 'string') {
+            return res.status(400).json({ error: 'La matrícula del estudiante debe ser un string' });
+        }
+
+        // Encontrar la actividad asignada para ese estudiante
+        const actividadEstudiante = await ActividadAsignada.findOne({ matriculaEstudiante });
+
+        if (!actividadEstudiante) {
+            return res.status(404).json({ error: 'No se encontraron actividades asignadas para este estudiante.' });
+        }
+
+        // Buscar la actividad específica y actualizar el estatus
+        const actividadEncontrada = actividadEstudiante.actividades.find(act => act.nombreActividad === nombreActividad);
+        
+        if (!actividadEncontrada) {
+            return res.status(404).json({ error: 'Actividad no asignada a este estudiante.' });
+        }
+
+        // Actualizar el estatus
+        actividadEncontrada.resultado = estatus;
+
+        // Guardar los cambios en la base de datos
+        await actividadEstudiante.save();
+
+        res.status(200).json({ mensaje: 'Estatus actualizado correctamente', actividad: actividadEncontrada });
+    } catch (error) {
+        console.error("Error al actualizar el estatus:", error);
+        res.status(500).json({ error: 'Error al actualizar el estatus de la actividad.' });
     }
 };
