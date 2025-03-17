@@ -1,0 +1,71 @@
+<h2>Actividades Disponibles</h2>
+
+<!-- Combo de selección para elegir al profesor -->
+<label for="profesor">Selecciona un Profesor:</label>
+<select id="profesor" [(ngModel)]="profesorSeleccionado" (change)="cargarActividades()">
+  <option value="">Selecciona un Profesor</option>
+  <option *ngFor="let profesor of profesores" [value]="profesor.nombreProfesor">
+    {{ profesor.nombreProfesor }}
+  </option>
+</select>
+
+<!-- Mostrar las actividades -->
+<div *ngIf="actividades.length > 0">
+  <h3>Actividades para {{ profesorSeleccionado }}</h3>
+  <ul>
+    <li *ngFor="let actividad of actividades" (click)="actividadSeleccionada = actividad.nombre">
+      {{ actividad.nombre }} - Fecha de inicio: {{ actividad.fechaInicio | date }}
+    </li>
+  </ul>
+</div>
+
+<!-- Si hay una actividad seleccionada, muestra el combo para seleccionar el estudiante -->
+<div *ngIf="actividadSeleccionada">
+  <h3>Asignar Actividad: {{ actividadSeleccionada }}</h3>
+
+  <!-- Botón para cargar estudiantes -->
+  <button (click)="toggleEstudiantes()">Mostrar Estudiantes</button>
+
+  <!-- Mostrar estudiantes solo si showEstudiantes es true -->
+  <div *ngIf="showEstudiantes">
+    <h4>Buscar Estudiante:</h4>
+    <input type="text" [(ngModel)]="busqueda" (input)="buscarEstudiantes()" placeholder="Buscar por matrícula o nombre" />
+
+    <!-- Lista de estudiantes filtrados -->
+    <select id="estudiante" [(ngModel)]="estudianteSeleccionado" (change)="cargarActividadesEstudiante()">
+      <option value="">Selecciona un Estudiante</option>
+      <option *ngFor="let estudiante of estudiantesFiltrados" [value]="estudiante.matriculaEstudiante">
+        {{ estudiante.nombreCompleto }}
+      </option>
+    </select>
+
+    <!-- Mostrar las actividades del estudiante seleccionado -->
+    <div *ngIf="actividadesEstudiante.length > 0">
+      <h4>Actividades Asignadas al Estudiante:</h4>
+      <ul>
+        <li *ngFor="let actividad of actividadesEstudiante">
+          {{ actividad.nombreActividad }} - Estatus: {{ actividad.resultado }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- Campo de selección para el estatus de la actividad -->
+    <label for="estatus">Estatus de la actividad:</label>
+    <select id="estatus" [(ngModel)]="estatusSeleccionado">
+      <option value="Pendiente">Pendiente</option>
+      <option value="Completada">Completada</option>
+      <option value="En Progreso">En Progreso</option>
+    </select>
+
+    <!-- Botón para asignar la actividad -->
+    <button (click)="asignarActividad()">Asignar Actividad</button>
+
+    <!-- Botón para actualizar el estatus de la actividad -->
+    <button (click)="actualizarEstatus()">Actualizar Estatus</button>
+  </div>
+</div>
+
+<!-- Mensaje cuando no hay actividades -->
+<ng-template #noActividades>
+  <p>No hay actividades disponibles para este profesor.</p>
+</ng-template>

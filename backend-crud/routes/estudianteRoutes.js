@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const estudianteController = require('../controllers/estudianteController');
 
-// Registrar un estudiante
-router.post('/registro', estudianteController.registrarEstudiante);
 
 // Consultar información personal de un estudiante
 router.get('/perfil/:matricula', estudianteController.consultarInformacionPersonal);
@@ -16,6 +14,11 @@ router.get('/materias/:matricula', estudianteController.consultarMaterias);
 
 // Consultar todas las actividades asignadas a un estudiante
 router.get('/actividades/:matricula', estudianteController.consultarActividades);
+
+// Ruta para obtener todos los estudiantes
+router.get('/todos', estudianteController.obtenerEstudiantes); 
+
+
 
 
 
