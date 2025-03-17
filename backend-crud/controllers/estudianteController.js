@@ -146,11 +146,27 @@ exports.consultarMaterias = async (req, res) => {
   }
 };
 
+exports.obtenerEstudiantes = async (req, res) => {
+  try {
+    const estudiantes = await Estudiante.find({}, { matriculaEstudiante: 1, nombreCompleto: 1, _id: 0 });
+
+    if (!estudiantes || estudiantes.length === 0) {
+      return res.status(404).json({ error: "No se encontraron estudiantes." });
+    }
+
+    res.status(200).json(estudiantes);
+  } catch (error) {
+    console.error("Error al obtener los estudiantes:", error);
+    res.status(500).json({ error: "Error interno al obtener los estudiantes." });
+  }
+};
+
+
 exports.consultarActividades = async (req, res) => {
   try {
     const matricula = req.params.matricula.toString().trim(); // Convertimos la matrícula a String
 
-    console.log(`🔍 Buscando actividades para matrícula: "${matricula}"`);
+    console.log(`Buscando actividades para matrícula: "${matricula}"`);
 
     // Buscar en la colección actividadesAsignadas
     const actividadesEstudiante = await ActividadAsignada.findOne(
@@ -158,21 +174,20 @@ exports.consultarActividades = async (req, res) => {
       { actividades: 1, _id: 0 }
     );
 
-    console.log("📊 Resultado de la búsqueda en MongoDB:", actividadesEstudiante);
+    console.log("Resultado de la búsqueda en MongoDB:", actividadesEstudiante);
 
     if (!actividadesEstudiante || !actividadesEstudiante.actividades || actividadesEstudiante.actividades.length === 0) {
-      console.log(`⚠️ No se encontraron actividades para el estudiante ${matricula}`);
+      console.log(`No se encontraron actividades para el estudiante ${matricula}`);
       return res.status(404).json({ error: 'No hay actividades asignadas para este estudiante.' });
     }
 
     res.status(200).json(actividadesEstudiante.actividades);
-    
+
   } catch (error) {
-    console.error("❌ Error en la consulta:", error);
+    console.error("Error en la consulta:", error);
     res.status(500).json({ error: 'Ocurrió un error al consultar las actividades.' });
   }
 };
-
 
 
 const path = require('path');
