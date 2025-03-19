@@ -1,43 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrar Observación</title>
 </head>
 <body>
-
-    <h2>Registrar Observación</h2>
-
-    <label>Selecciona una materia:</label>
-    <select [(ngModel)]="materiaSeleccionada" (change)="obtenerEstudiantes()">
-      <option *ngFor="let materia of materias" [value]="materia.nombreMateria">{{ materia.nombreMateria }}</option>
-    </select>
+  <div class="container">
+    <h2>📝 Registrar Observación</h2>
     
-    <label>Selecciona un estudiante:</label>
-    <select [(ngModel)]="estudianteSeleccionado">
-      <option *ngFor="let estudiante of estudiantes" [value]="estudiante.matriculaEstudiante">
-        {{ estudiante.nombreCompleto }}
-      </option>
-    </select>
-
+    <div class="form-group">
+      <label>Selecciona una materia:</label>
+      <select [(ngModel)]="materiaSeleccionada" (change)="obtenerEstudiantes()">
+        <option *ngFor="let materia of materias" [value]="materia.nombreMateria">
+          {{ materia.nombreMateria }}
+        </option>
+      </select>
+    </div>
     
+    <div class="form-group">
+      <label>Selecciona un estudiante:</label>
+      <select [(ngModel)]="estudianteSeleccionado">
+        <option *ngFor="let estudiante of estudiantes" [value]="estudiante.matriculaEstudiante">
+          {{ estudiante.nombreCompleto }}
+        </option>
+      </select>
+    </div>
     
-    <label>Descripción:</label>
-    <textarea [(ngModel)]="descripcion" rows="3"></textarea>
+    <div class="form-group">
+      <label>Descripción:</label>
+      <textarea [(ngModel)]="descripcion" rows="4" class="textarea-descripcion"></textarea>
+    </div>
     
-    <label>Semestre:</label>
-    <select [(ngModel)]="semestreSeleccionado">
-      <option value="1">Semestre 1</option>
-      <option value="2">Semestre 2</option>
-    </select>
-    
-    <label>Año:</label>
-    <input type="number" [(ngModel)]="anioSeleccionado" />
+    <div class="form-row">
+      <div class="form-group form-group-half">
+        <label>Semestre:</label>
+        <select [(ngModel)]="semestreSeleccionado">
+          <option value="1">Semestre 1</option>
+          <option value="2">Semestre 2</option>
+        </select>
+      </div>
+      
+      <div class="form-group form-group-half">
+        <label>Año:</label>
+        <input type="number" [(ngModel)]="anioSeleccionado" class="input-anio" />
+      </div>
+    </div>
     
     <button (click)="registrarObservacion()">Registrar Observación</button>
-    
-
-    
+  </div>
 </body>
 </html>

@@ -13,14 +13,24 @@ export class EstudianteRegistrarComponent {
   estudianteForm: FormGroup;
   foto: File | null = null;
 
-  constructor(private fb: FormBuilder, private estudianteService: ServiciosEscolaresService, private router: Router) {
+  // Nuevos arrays para carreras y especialidades
+  carreras: any[] = [];
+  especialidades: any[] = [];
+
+  constructor(private fb: FormBuilder, 
+              private estudianteService: ServiciosEscolaresService, 
+              private router: Router) {
     this.estudianteForm = this.fb.group({
       nombreCompleto: ['', Validators.required],
       apellidoPaterno: ['', Validators.required],
+      // Se cambia el input por select, por lo que el valor se asignará al seleccionar una carrera
       carrera: ['', Validators.required],
+      especialidadCursar: ['', Validators.required],
       matriculaEstudiante: [{ value: '', disabled: true }],
       semestre: ['', Validators.required],
       promedioBachillerato: ['', [Validators.required, Validators.min(0), Validators.max(10)]],
+      certificadoBachillerato: ['', [Validators.required, Validators.min(0), Validators.max(1)]],
+      especialidadBachillerato: ['', Validators.required],
       fechaNacimiento: ['', Validators.required],
       sexo: ['', Validators.required],
       rfc: [''],
@@ -32,14 +42,17 @@ export class EstudianteRegistrarComponent {
         codigoPostal: [''],
         ciudad: ['']
       }),
-      // Nuevos FormArray para teléfonos y correos del estudiante
+      // FormArray para teléfonos y correos del estudiante
       telefonos: this.fb.array([]),
       correos: this.fb.array([]),
       tutores: this.fb.array([])
     });
+
+    // Cargar las carreras al inicializar
+    this.getCarreras();
   }
 
-  // Getter para acceder a los arrays
+  // Getters para los FormArray
   get telefonos(): FormArray {
     return this.estudianteForm.get('telefonos') as FormArray;
   }
@@ -50,23 +63,19 @@ export class EstudianteRegistrarComponent {
     return this.estudianteForm.get('tutores') as FormArray;
   }
 
-  // Métodos para agregar/eliminar teléfonos
+  // Métodos para agregar/eliminar teléfonos y correos (como ya tienes)
   agregarTelefono() {
     this.telefonos.push(this.fb.control(''));
   }
   eliminarTelefono(index: number) {
     this.telefonos.removeAt(index);
   }
-
-  // Métodos para agregar/eliminar correos
   agregarCorreo() {
     this.correos.push(this.fb.control(''));
   }
   eliminarCorreo(index: number) {
     this.correos.removeAt(index);
   }
-
-  // Métodos existentes para tutores
   agregarTutor() {
     const tutorForm = this.fb.group({
       nombreCompleto: ['', Validators.required],
@@ -91,6 +100,29 @@ export class EstudianteRegistrarComponent {
     this.foto = event.target.files[0];
   }
 
+  // Método para cargar carreras (asegúrate de que exista el endpoint en el backend)
+  getCarreras(): void {
+    this.estudianteService.getCarreras().subscribe(
+      data => {
+        // Se asume que el backend responde con { carreras: [...] }
+        this.carreras = data.carreras;
+      },
+      error => {
+        console.error('Error al obtener carreras:', error);
+      }
+    );
+  }
+
+  // Método que se ejecuta cuando se selecciona una carrera
+  onCarreraChange(selectedCarrera: string): void {
+    const carreraSeleccionada = this.carreras.find(c => c.nombreCarrera === selectedCarrera);
+    if (carreraSeleccionada) {
+      this.especialidades = carreraSeleccionada.especialidades;
+    } else {
+      this.especialidades = [];
+    }
+  }
+
   submitForm() {
     const formData = new FormData();
     const estudianteData = this.estudianteForm.value;
@@ -111,7 +143,7 @@ export class EstudianteRegistrarComponent {
     this.estudianteService.crearEstudiante(formData).subscribe(response => {
       console.log('Estudiante registrado:', response);
       alert('Estudiante registrado con éxito');
-      this.router.navigate(['/']);  // Redirigir a la página principal o la ruta que desees
+      this.router.navigate(['/']);  // Redirigir a la página principal o a la ruta deseada
     }, error => {
       console.error('Error:', error);
     });

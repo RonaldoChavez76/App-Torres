@@ -1,26 +1,144 @@
-<div *ngIf="estudiante">
+<div class="estudiante-detalle" *ngIf="estudiante">
   <h3>Información del Estudiante</h3>
   
-  <!-- Mostrar la foto del estudiante con tamaño ajustado -->
-  <div *ngIf="estudiante.foto">
-    <img [src]="'http://localhost:3000/' + estudiante.foto" alt="Foto del estudiante" style="max-width: 200px; max-height: 200px; object-fit: cover;">
+  <!-- Mostrar la foto del estudiante -->
+  <div *ngIf="estudiante.foto" class="foto-container">
+    <img class="foto-estudiante" [src]="'http://localhost:3000/' + estudiante.foto" alt="Foto del estudiante">
   </div>
 
+  <div class="datos-basicos">
+    <div class="dato">
+      <strong>Nombre Completo:</strong> {{ estudiante.nombreCompleto }}
+    </div>
+    <div class="dato">
+      <strong>Apellido Paterno:</strong> {{ estudiante.apellidoPaterno }}
+    </div>
+    <div class="dato">
+      <strong>Matrícula:</strong> {{ estudiante.matriculaEstudiante }}
+    </div>
+    <div class="dato">
+      <strong>Semestre:</strong> {{ estudiante.semestre }}
+    </div>
+    <div class="dato">
+      <strong>Fecha de Nacimiento:</strong> {{ estudiante.fechaNacimiento | date }}
+    </div>
+    <div class="dato">
+      <strong>Sexo:</strong> {{ estudiante.sexo }}
+    </div>
+    <!-- Mostrar teléfonos y correos del estudiante -->
+    <div class="dato">
+      <strong>Teléfonos:</strong> 
+      <span *ngIf="estudiante.telefonos && estudiante.telefonos.length > 0">
+        {{ estudiante.telefonos.join(', ') }}
+      </span>
+      <span *ngIf="!estudiante.telefonos || estudiante.telefonos.length === 0">
+        No hay teléfonos disponibles
+      </span>
+    </div>
+    <div class="dato">
+      <strong>Correos:</strong> 
+      <span *ngIf="estudiante.correos && estudiante.correos.length > 0">
+        {{ estudiante.correos.join(', ') }}
+      </span>
+      <span *ngIf="!estudiante.correos || estudiante.correos.length === 0">
+        No hay correos disponibles
+      </span>
+    </div>
+    <div class="dato">
+      <strong>RFC:</strong> {{ estudiante.rfc }}
+    </div>
+  </div>
 
-  <p><strong>Nombre Completo:</strong> {{ estudiante.nombreCompleto }}</p>
-  <p><strong>Carrera:</strong> {{ estudiante.carrera }}</p>
-  <p><strong>Matrícula:</strong> {{ estudiante.matriculaEstudiante }}</p>
-  <p><strong>Semestre:</strong> {{ estudiante.semestre }}</p>
-  <p><strong>Promedio Bachillerato:</strong> {{ estudiante.promedioBachillerato }}</p>
-  
-  <!-- Botón para ir al formulario de edición -->
-  <button (click)="actualizarInformacion()">Actualizar Información</button>
-  
-  <!-- Botones para eliminación -->
-  <button (click)="eliminarDefinitivamente()">Baja Definitiva</button>
-  <button (click)="eliminarTemporalmente()">Baja Temporal</button>
+  <div class="seccion">
+    <div class="seccion-titulo">Domicilio</div>
+    <div class="domicilio-datos">
+      <div class="dato">
+        <strong>Calle:</strong> {{ estudiante.domicilio.calle }}
+      </div>
+      <div class="dato">
+        <strong>Número Interior:</strong> {{ estudiante.domicilio.numeroInterior }}
+      </div>
+      <div class="dato">
+        <strong>Número Exterior:</strong> {{ estudiante.domicilio.numeroExterior }}
+      </div>
+      <div class="dato">
+        <strong>Colonia:</strong> {{ estudiante.domicilio.colonia }}
+      </div>
+      <div class="dato">
+        <strong>Código Postal:</strong> {{ estudiante.domicilio.codigoPostal }}
+      </div>
+      <div class="dato">
+        <strong>Ciudad:</strong> {{ estudiante.domicilio.ciudad }}
+      </div>
+    </div>
+  </div>
+
+  <div class="datos-basicos">
+    <div class="dato">
+      <strong>Promedio Bachillerato:</strong> {{ estudiante.promedioBachillerato }}
+    </div>
+    <div class="dato">
+      <strong>Especialidad Bachillerato:</strong> {{ estudiante.especialidadBachillerato }}
+    </div>
+    <div class="dato">
+      <strong>Carrera:</strong> {{ estudiante.carrera }}
+    </div>
+    <div class="dato">
+      <strong>Especialidad Cursar:</strong> {{ estudiante.especialidadCursar }}
+    </div>
+    <div class="dato">
+      <strong>Certificado Bachillerato:</strong> {{ estudiante.certificadoBachillerato }}
+    </div>
+  </div>
+
+  <div class="seccion">
+    <div class="seccion-titulo">Tutores</div>
+    <div class="tutores-grid">
+      <div class="tutor-card" *ngFor="let tutor of estudiante.tutores; let i = index">
+        <h4>Tutor {{ i + 1 }}</h4>
+        <div class="dato">
+          <strong>Nombre Completo:</strong> {{ tutor.nombreCompleto }}
+        </div>
+        
+        <div class="seccion-titulo">Domicilio</div>
+        <div class="domicilio-datos">
+          <div class="dato">
+            <strong>Calle:</strong> {{ tutor.domicilio.calle }}
+          </div>
+          <div class="dato">
+            <strong>Número Interior:</strong> {{ tutor.domicilio.numeroInterior }}
+          </div>
+          <div class="dato">
+            <strong>Número Exterior:</strong> {{ tutor.domicilio.numeroExterior }}
+          </div>
+          <div class="dato">
+            <strong>Colonia:</strong> {{ tutor.domicilio.colonia }}
+          </div>
+          <div class="dato">
+            <strong>Código Postal:</strong> {{ tutor.domicilio.codigoPostal }}
+          </div>
+          <div class="dato">
+            <strong>Ciudad:</strong> {{ tutor.domicilio.ciudad }}
+          </div>
+        </div>
+        
+        <div class="dato">
+          <strong>Teléfonos:</strong> {{ tutor.telefonos.join(', ') }}
+        </div>
+        <div class="dato">
+          <strong>Correos:</strong> {{ tutor.correos.join(', ') }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="botones-container">
+    <button class="btn btn-actualizar" (click)="actualizarInformacion()">Actualizar Información</button>
+    <button class="btn btn-baja-definitiva" (click)="eliminarDefinitivamente()">Baja Definitiva</button>
+    <button class="btn btn-baja-temporal" (click)="eliminarTemporalmente()">Baja Temporal</button>
+  </div>
 </div>
 
-<div *ngIf="!estudiante">
+<div class="cargando" *ngIf="!estudiante">
   <p>Cargando la información del estudiante...</p>
 </div>

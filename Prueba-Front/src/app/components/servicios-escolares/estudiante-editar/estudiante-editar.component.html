@@ -1,90 +1,267 @@
-<div *ngIf="estudiante">
-  <h3>Editar Estudiante</h3>
-  <form (ngSubmit)="guardarCambios()">
-    <!-- Campos básicos del estudiante -->
-    <label>Nombre Completo:</label>
-    <input [(ngModel)]="estudiante.nombreCompleto" name="nombreCompleto" required />
-
-    <label>Carrera:</label>
-    <input [(ngModel)]="estudiante.carrera" name="carrera" required />
-
-    <label>Matrícula:</label>
-    <input [(ngModel)]="estudiante.matriculaEstudiante" name="matriculaEstudiante" disabled />
-
-    <label>Semestre:</label>
-    <input [(ngModel)]="estudiante.semestre" name="semestre" required />
-
-    <label>Promedio Bachillerato:</label>
-    <input [(ngModel)]="estudiante.promedioBachillerato" name="promedioBachillerato" type="number" step="0.1" required />
-
-    <label>Fecha de Nacimiento:</label>
-    <input [(ngModel)]="estudiante.fechaNacimiento" name="fechaNacimiento" type="date" required />
-
-    <label>Sexo:</label>
-    <select [(ngModel)]="estudiante.sexo" name="sexo" required>
-      <option value="M">Masculino</option>
-      <option value="F">Femenino</option>
-    </select>
-
-    <label>RFC:</label>
-    <input [(ngModel)]="estudiante.rfc" name="rfc" />
-
-    <!-- Domicilio -->
-    <h4>Domicilio</h4>
-    <label>Calle:</label>
-    <input [(ngModel)]="estudiante.domicilio.calle" name="domicilioCalle" />
-
-    <label>Número Interior:</label>
-    <input [(ngModel)]="estudiante.domicilio.numeroInterior" name="domicilioNumeroInterior" />
-
-    <label>Número Exterior:</label>
-    <input [(ngModel)]="estudiante.domicilio.numeroExterior" name="domicilioNumeroExterior" />
-
-    <label>Colonia:</label>
-    <input [(ngModel)]="estudiante.domicilio.colonia" name="domicilioColonia" />
-
-    <label>Código Postal:</label>
-    <input [(ngModel)]="estudiante.domicilio.codigoPostal" name="domicilioCodigoPostal" />
-
-    <label>Ciudad:</label>
-    <input [(ngModel)]="estudiante.domicilio.ciudad" name="domicilioCiudad" />
-
-    <!-- Tutores -->
-    <h4>Tutores</h4>
-    <div *ngFor="let tutor of estudiante.tutores; let i = index">
-      <label>Nombre del Tutor {{i + 1}}:</label>
-      <input [(ngModel)]="tutor.nombreCompleto" name="tutorNombreCompleto{{i}}" />
-
-      <label>Calle del Tutor:</label>
-      <input [(ngModel)]="tutor.domicilio.calle" name="tutorCalle{{i}}" />
-
-      <label>Número Interior del Tutor:</label>
-      <input [(ngModel)]="tutor.domicilio.numeroInterior" name="tutorNumeroInterior{{i}}" />
-
-      <label>Número Exterior del Tutor:</label>
-      <input [(ngModel)]="tutor.domicilio.numeroExterior" name="tutorNumeroExterior{{i}}" />
-
-      <label>Colonia del Tutor:</label>
-      <input [(ngModel)]="tutor.domicilio.colonia" name="tutorColonia{{i}}" />
-
-      <label>Código Postal del Tutor:</label>
-      <input [(ngModel)]="tutor.domicilio.codigoPostal" name="tutorCodigoPostal{{i}}" />
-
-      <label>Ciudad del Tutor:</label>
-      <input [(ngModel)]="tutor.domicilio.ciudad" name="tutorCiudad{{i}}" />
-
-      <label>Teléfonos del Tutor:</label>
-      <input [(ngModel)]="tutor.telefonos" name="tutorTelefonos{{i}}" />
-
-      <label>Correos del Tutor:</label>
-      <input [(ngModel)]="tutor.correos" name="tutorCorreos{{i}}" />
-    </div>
-
-    <!-- Foto -->
-    <label>Foto:</label>
-    <input [(ngModel)]="estudiante.foto" name="foto" type="file" />
-
-    <!-- Botón para guardar los cambios -->
-    <button type="submit" [disabled]="isSubmitting">Guardar Cambios</button>
-  </form>
-</div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Estudiante</title>
+</head>
+<body>
+  <div class="container">
+    <h2>👨‍🎓 Editar Estudiante</h2>
+    
+    <form [formGroup]="estudianteForm" (ngSubmit)="guardarCambios()" class="edit-form">
+      <div class="form-section">
+        <h3 class="section-title">Información Personal</h3>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nombre Completo:</label>
+            <input formControlName="nombreCompleto" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Apellido Paterno:</label>
+            <input formControlName="apellidoPaterno" required>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label>Matrícula:</label>
+            <input formControlName="matriculaEstudiante">
+          </div>
+          
+          <div class="form-group">
+            <label>Fecha de Nacimiento:</label>
+            <input type="date" formControlName="fechaNacimiento" required>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label>Sexo:</label>
+            <select formControlName="sexo" required>
+              <option value="M">Masculino</option>
+              <option value="F">Femenino</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>RFC:</label>
+            <input formControlName="rfc">
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-section">
+        <h3 class="section-title">Información Académica</h3>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label>Carrera:</label>
+            <select #carreraSelect formControlName="carrera" (change)="onCarreraChange(carreraSelect.value)" required>
+              <option value="">Seleccione carrera</option>
+              <option *ngFor="let carr of carreras" [value]="carr.nombreCarrera">
+                {{ carr.nombreCarrera }}
+              </option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>Especialidad a Cursar:</label>
+            <select formControlName="especialidadCursar" required>
+              <option value="">Seleccione especialidad</option>
+              <option *ngFor="let esp of especialidades" [value]="esp.nombreEspecialidad">
+                {{ esp.nombreEspecialidad }}
+              </option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label>Semestre:</label>
+            <input type="number" formControlName="semestre" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Promedio Bachillerato:</label>
+            <input type="number" formControlName="promedioBachillerato" step="0.1" required>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label>Especialidad del Bachillerato:</label>
+            <input formControlName="especialidadBachillerato" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Certificado de Bachillerato:</label>
+            <input type="number" formControlName="certificadoBachillerato" step="0.1" required>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-section">
+        <h3 class="section-title">Domicilio</h3>
+        
+        <fieldset formGroupName="domicilio" class="fieldset-domicilio">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Calle:</label>
+              <input formControlName="calle">
+            </div>
+            
+            <div class="form-group form-group-small">
+              <label>Número Interior:</label>
+              <input formControlName="numeroInterior">
+            </div>
+            
+            <div class="form-group form-group-small">
+              <label>Número Exterior:</label>
+              <input formControlName="numeroExterior">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Colonia:</label>
+              <input formControlName="colonia">
+            </div>
+            
+            <div class="form-group">
+              <label>Código Postal:</label>
+              <input formControlName="codigoPostal">
+            </div>
+            
+            <div class="form-group">
+              <label>Ciudad:</label>
+              <input formControlName="ciudad">
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      
+      <div class="form-section">
+        <h3 class="section-title">Contacto</h3>
+        
+        <div class="subsection">
+          <h4 class="subsection-title">Teléfonos del Estudiante</h4>
+          <div formArrayName="telefonos" class="array-container">
+            <div *ngFor="let tel of telefonos.controls; let i = index" class="array-item">
+              <input [formControlName]="i" placeholder="Teléfono">
+              <button type="button" class="btn-remove" (click)="eliminarTelefono(i)">
+                <span class="icon">✖</span>
+              </button>
+            </div>
+            <button type="button" class="btn-add" (click)="agregarTelefono()">
+              <span class="icon">+</span> Agregar Teléfono
+            </button>
+          </div>
+        </div>
+        
+        <div class="subsection">
+          <h4 class="subsection-title">Correos del Estudiante</h4>
+          <div formArrayName="correos" class="array-container">
+            <div *ngFor="let correo of correos.controls; let i = index" class="array-item">
+              <input [formControlName]="i" placeholder="Correo">
+              <button type="button" class="btn-remove" (click)="eliminarCorreo(i)">
+                <span class="icon">✖</span>
+              </button>
+            </div>
+            <button type="button" class="btn-add" (click)="agregarCorreo()">
+              <span class="icon">+</span> Agregar Correo
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-section">
+        <h3 class="section-title">Tutores</h3>
+        
+        <div formArrayName="tutores" class="tutores-container">
+          <div *ngFor="let tutor of tutores.controls; let i = index" [formGroupName]="i" class="tutor-card">
+            <h4 class="tutor-title">Tutor {{ i + 1 }}</h4>
+            
+            <div class="form-group">
+              <label>Nombre del Tutor:</label>
+              <input formControlName="nombreCompleto" required>
+            </div>
+            
+            <fieldset formGroupName="domicilio" class="fieldset-domicilio">
+              <legend>Domicilio</legend>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Calle:</label>
+                  <input formControlName="calle">
+                </div>
+                
+                <div class="form-group form-group-small">
+                  <label>Número Interior:</label>
+                  <input formControlName="numeroInterior">
+                </div>
+                
+                <div class="form-group form-group-small">
+                  <label>Número Exterior:</label>
+                  <input formControlName="numeroExterior">
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Colonia:</label>
+                  <input formControlName="colonia">
+                </div>
+                
+                <div class="form-group">
+                  <label>Código Postal:</label>
+                  <input formControlName="codigoPostal">
+                </div>
+                
+                <div class="form-group">
+                  <label>Ciudad:</label>
+                  <input formControlName="ciudad">
+                </div>
+              </div>
+            </fieldset>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label>Teléfonos:</label>
+                <input formControlName="telefonos" placeholder="Separados por coma">
+              </div>
+              
+              <div class="form-group">
+                <label>Correos:</label>
+                <input formControlName="correos" placeholder="Separados por coma">
+              </div>
+            </div>
+            
+            <button type="button" class="btn-remove tutor-remove" (click)="eliminarTutor(i)">
+              Eliminar Tutor
+            </button>
+          </div>
+          
+          <button type="button" class="btn-add tutor-add" (click)="agregarTutor()">
+            <span class="icon">+</span> Agregar Tutor
+          </button>
+        </div>
+      </div>
+      
+      <div class="form-section">
+        <h3 class="section-title">Foto del Estudiante</h3>
+        
+        <div class="form-group file-input-container">
+          <label>Subir foto:</label>
+          <input type="file" (change)="onFileChange($event)" class="file-input">
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <button type="submit" class="btn-submit">Guardar Cambios</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

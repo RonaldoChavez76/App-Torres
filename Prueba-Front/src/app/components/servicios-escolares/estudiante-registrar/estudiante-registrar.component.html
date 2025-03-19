@@ -1,108 +1,196 @@
-<form [formGroup]="estudianteForm" (ngSubmit)="submitForm()">
+<form [formGroup]="estudianteForm" (ngSubmit)="submitForm()" class="registro-form-container">
   <h3>Registro de Estudiante</h3>
 
-  <label>Nombre Completo:</label>
-  <input formControlName="nombreCompleto" required>
+  <div class="form-grid">
+    <div class="form-group">
+      <label>Nombre Completo:</label>
+      <input class="form-control" formControlName="nombreCompleto" required>
+    </div>
 
-  <label>Apellido Paterno:</label>
-  <input formControlName="apellidoPaterno" required>
+    <div class="form-group">
+      <label>Apellido Paterno:</label>
+      <input class="form-control" formControlName="apellidoPaterno" required>
+    </div>
 
-  <label>Carrera:</label>
-  <input formControlName="carrera" required>
+    <!-- Combo de Carreras -->
+    <div class="form-group">
+      <label>Carrera:</label>
+      <select class="form-control" #carreraSelect formControlName="carrera" (change)="onCarreraChange(carreraSelect.value)" required>
+        <option value="">Seleccione carrera</option>
+        <option *ngFor="let carr of carreras" [value]="carr.nombreCarrera">
+          {{ carr.nombreCarrera }}
+        </option>
+      </select>
+    </div>
 
-  <label>Matrícula:</label>
-  <input formControlName="matriculaEstudiante">
+    <!-- Combo de Especialidad a Cursar -->
+    <div class="form-group">
+      <label>Especialidad a Cursar:</label>
+      <select class="form-control" formControlName="especialidadCursar" required>
+        <option value="">Seleccione especialidad</option>
+        <option *ngFor="let esp of especialidades" [value]="esp.nombreEspecialidad">
+          {{ esp.nombreEspecialidad }}
+        </option>
+      </select>
+    </div>
 
-  <label>Semestre:</label>
-  <input type="number" formControlName="semestre" required>
+    <div class="form-group">
+      <label>Matrícula:</label>
+      <input class="form-control" formControlName="matriculaEstudiante">
+    </div>
 
-  <label>Promedio Bachillerato:</label>
-  <input type="number" formControlName="promedioBachillerato" step="0.1" required>
+    <div class="form-group">
+      <label>Semestre:</label>
+      <input class="form-control" type="number" formControlName="semestre" required>
+    </div>
 
-  <label>Fecha de Nacimiento:</label>
-  <input type="date" formControlName="fechaNacimiento" required>
+    <div class="form-group">
+      <label>Promedio Bachillerato:</label>
+      <input class="form-control" type="number" formControlName="promedioBachillerato" step="0.1" required>
+    </div>
 
-  <label>Sexo:</label>
-  <select formControlName="sexo" required>
-    <option value="M">Masculino</option>
-    <option value="F">Femenino</option>
-  </select>
+    <div class="form-group">
+      <label>Especialidad del Bachillerato:</label>
+      <input class="form-control" formControlName="especialidadBachillerato" required>
+    </div>
 
-  <label>RFC:</label>
-  <input formControlName="rfc">
+    <div class="form-group">
+      <label>Certificado de Bachillerato:</label>
+      <input class="form-control" type="number" formControlName="certificadoBachillerato" step="0.1" required>
+    </div>
 
-  <fieldset formGroupName="domicilio">
+    <div class="form-group">
+      <label>Fecha de Nacimiento:</label>
+      <input class="form-control" type="date" formControlName="fechaNacimiento" required>
+    </div>
+
+    <div class="form-group">
+      <label>Sexo:</label>
+      <select class="form-control" formControlName="sexo" required>
+        <option value="M">Masculino</option>
+        <option value="F">Femenino</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>RFC:</label>
+      <input class="form-control" formControlName="rfc">
+    </div>
+  </div>
+
+  <div class="fieldset" formGroupName="domicilio">
     <legend>Domicilio</legend>
-    <label>Calle:</label>
-    <input formControlName="calle">
-    <label>Número Interior:</label>
-    <input formControlName="numeroInterior">
-    <label>Número Exterior:</label>
-    <input formControlName="numeroExterior">
-    <label>Colonia:</label>
-    <input formControlName="colonia">
-    <label>Código Postal:</label>
-    <input formControlName="codigoPostal">
-    <label>Ciudad:</label>
-    <input formControlName="ciudad">
-  </fieldset>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Calle:</label>
+        <input class="form-control" formControlName="calle">
+      </div>
+      <div class="form-group">
+        <label>Número Interior:</label>
+        <input class="form-control" formControlName="numeroInterior">
+      </div>
+      <div class="form-group">
+        <label>Número Exterior:</label>
+        <input class="form-control" formControlName="numeroExterior">
+      </div>
+      <div class="form-group">
+        <label>Colonia:</label>
+        <input class="form-control" formControlName="colonia">
+      </div>
+      <div class="form-group">
+        <label>Código Postal:</label>
+        <input class="form-control" formControlName="codigoPostal">
+      </div>
+      <div class="form-group">
+        <label>Ciudad:</label>
+        <input class="form-control" formControlName="ciudad">
+      </div>
+    </div>
+  </div>
 
   <!-- Sección para Teléfonos del Estudiante -->
   <h4>Teléfonos del Estudiante</h4>
-  <div formArrayName="telefonos">
-    <div *ngFor="let tel of telefonos.controls; let i = index">
-      <input [formControlName]="i" placeholder="Teléfono">
-      <button type="button" (click)="eliminarTelefono(i)">Eliminar</button>
+  <div class="array-container" formArrayName="telefonos">
+    <div class="array-item" *ngFor="let tel of telefonos.controls; let i = index">
+      <input class="form-control" [formControlName]="i" placeholder="Teléfono">
+      <button type="button" class="btn btn-danger" (click)="eliminarTelefono(i)">Eliminar</button>
     </div>
   </div>
-  <button type="button" (click)="agregarTelefono()">Agregar Teléfono</button>
+  <button type="button" class="btn btn-secondary btn-add" (click)="agregarTelefono()">Agregar Teléfono</button>
 
   <!-- Sección para Correos del Estudiante -->
   <h4>Correos del Estudiante</h4>
-  <div formArrayName="correos">
-    <div *ngFor="let correo of correos.controls; let i = index">
-      <input [formControlName]="i" placeholder="Correo">
-      <button type="button" (click)="eliminarCorreo(i)">Eliminar</button>
+  <div class="array-container" formArrayName="correos">
+    <div class="array-item" *ngFor="let correo of correos.controls; let i = index">
+      <input class="form-control" [formControlName]="i" placeholder="Correo">
+      <button type="button" class="btn btn-danger" (click)="eliminarCorreo(i)">Eliminar</button>
     </div>
   </div>
-  <button type="button" (click)="agregarCorreo()">Agregar Correo</button>
+  <button type="button" class="btn btn-secondary btn-add" (click)="agregarCorreo()">Agregar Correo</button>
 
-  <!-- Sección para Tutores (ya existente) -->
+  <!-- Sección para Tutores -->
   <h4>Tutores</h4>
   <div formArrayName="tutores">
-    <div *ngFor="let tutor of tutores.controls; let i = index" [formGroupName]="i">
-      <label>Nombre del Tutor {{i + 1}}:</label>
-      <input formControlName="nombreCompleto" required>
+    <div class="tutor-container" *ngFor="let tutor of tutores.controls; let i = index" [formGroupName]="i">
+      <div class="tutor-header">
+        <h4>Tutor {{ i + 1 }}</h4>
+        <button type="button" class="btn btn-danger" (click)="eliminarTutor(i)">Eliminar Tutor</button>
+      </div>
+      
+      <div class="form-group">
+        <label>Nombre del Tutor:</label>
+        <input class="form-control" formControlName="nombreCompleto" required>
+      </div>
 
-      <fieldset formGroupName="domicilio">
+      <div class="fieldset" formGroupName="domicilio">
         <legend>Domicilio</legend>
-        <label>Calle:</label>
-        <input formControlName="calle">
-        <label>Número Interior:</label>
-        <input formControlName="numeroInterior">
-        <label>Número Exterior:</label>
-        <input formControlName="numeroExterior">
-        <label>Colonia:</label>
-        <input formControlName="colonia">
-        <label>Código Postal:</label>
-        <input formControlName="codigoPostal">
-        <label>Ciudad:</label>
-        <input formControlName="ciudad">
-      </fieldset>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Calle:</label>
+            <input class="form-control" formControlName="calle">
+          </div>
+          <div class="form-group">
+            <label>Número Interior:</label>
+            <input class="form-control" formControlName="numeroInterior">
+          </div>
+          <div class="form-group">
+            <label>Número Exterior:</label>
+            <input class="form-control" formControlName="numeroExterior">
+          </div>
+          <div class="form-group">
+            <label>Colonia:</label>
+            <input class="form-control" formControlName="colonia">
+          </div>
+          <div class="form-group">
+            <label>Código Postal:</label>
+            <input class="form-control" formControlName="codigoPostal">
+          </div>
+          <div class="form-group">
+            <label>Ciudad:</label>
+            <input class="form-control" formControlName="ciudad">
+          </div>
+        </div>
+      </div>
 
-      <label>Teléfonos:</label>
-      <input formControlName="telefonos">
+      <div class="form-group">
+        <label>Teléfonos:</label>
+        <input class="form-control" formControlName="telefonos" placeholder="Ejemplo: 555-1234, 555-5678">
+      </div>
 
-      <label>Correos:</label>
-      <input formControlName="correos">
-
-      <button type="button" (click)="eliminarTutor(i)">Eliminar Tutor</button>
+      <div class="form-group">
+        <label>Correos:</label>
+        <input class="form-control" formControlName="correos" placeholder="Ejemplo: correo@ejemplo.com, otro@ejemplo.com">
+      </div>
     </div>
   </div>
-  <button type="button" (click)="agregarTutor()">Agregar Tutor</button>
+  <button type="button" class="btn btn-secondary btn-add" (click)="agregarTutor()">Agregar Tutor</button>
 
-  <label>Foto:</label>
-  <input type="file" (change)="onFileChange($event)">
+  <div class="form-group file-input-container">
+    <label>Foto:</label>
+    <input class="form-control" type="file" (change)="onFileChange($event)">
+  </div>
 
-  <button type="submit">Registrar Estudiante</button>
+  <div class="submit-container">
+    <button type="submit" class="btn btn-primary submit-btn">Registrar Estudiante</button>
+  </div>
 </form>
