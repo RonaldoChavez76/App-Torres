@@ -12,10 +12,13 @@ exports.consultarInformacionPersonal = async (req, res) => {
   try {
     const matricula = req.params.matricula;
     const estudiante = await Estudiante.findOne({ matriculaEstudiante: matricula });
+
     if (!estudiante) {
       return res.status(404).send('Estudiante no encontrado');
     }
-    res.status(200).send(estudiante);  // Devolvemos los datos del alumno
+
+    // Devolver todos los datos del estudiante, incluyendo la foto
+    res.status(200).send(estudiante);
   } catch (error) {
     res.status(400).send(error);  // Error al buscar el estudiante
   }

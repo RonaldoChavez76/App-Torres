@@ -62,7 +62,7 @@ export class ProfesoresComponent implements OnInit {
         this.actividadesEstudiante = data; // Aquí almacenamos las actividades del estudiante
       }, error => {
         console.error('Error al cargar actividades del estudiante:', error);
-        alert('Hubo un error al cargar las actividades del estudiante.');
+        //alert('Hubo un error al cargar las actividades del estudiante.');
       });
     }
   }
@@ -91,6 +91,8 @@ export class ProfesoresComponent implements OnInit {
 
       this.profesorService.registrarActividad(actividadData).subscribe(response => {
         alert('Actividad asignada correctamente!');
+        // Recargar las actividades después de la asignación
+        this.cargarActividadesEstudiante(); // Recargar actividades del estudiante
       }, error => {
         console.error('Error al asignar la actividad:', error);
         alert('Hubo un error al asignar la actividad.');

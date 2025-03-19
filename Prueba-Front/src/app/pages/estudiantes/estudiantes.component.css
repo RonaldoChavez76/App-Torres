@@ -1,0 +1,292 @@
+/* Estilos para el componente de Información del Estudiante */
+.estudiante-info-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #f0f8ff;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .foto-container {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .foto-estudiante {
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 50%;
+    border: 3px solid #90caf9;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s;
+  }
+  
+  .foto-estudiante:hover {
+    transform: scale(1.05);
+  }
+
+  .domicilio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .domicilio-header h4 {
+    margin: 0;
+    padding: 0;
+    border-left: 4px solid #1e88e5;
+    padding-left: 10px;
+  }
+  
+  .editar-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: #78909c;
+    color: white;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .editar-btn:hover {
+    background-color: #546e7a;
+  }
+
+  .tutor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .tutor-header h4 {
+    margin: 0;
+    padding: 0;
+    border-left: 4px solid #1e88e5;
+    padding-left: 10px;
+  }
+
+  .estudiante-info-container h2 {
+    color: #1e88e5;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 26px;
+    font-weight: 600;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #90caf9;
+  }
+  
+  .estudiante-info-container h3 {
+    color: #1976d2;
+    font-size: 22px;
+    margin: 25px 0 15px;
+    padding-left: 10px;
+    border-left: 4px solid #1e88e5;
+  }
+  
+  .estudiante-info-container h4 {
+    color: #1976d2;
+    font-size: 18px;
+    margin: 20px 0 10px;
+    padding-left: 10px;
+    border-left: 4px solid #1e88e5;
+  }
+  
+  .estudiante-info-container select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #bbdefb;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: all 0.3s;
+    background-color: white;
+    margin-bottom: 20px;
+    cursor: pointer;
+    padding-right: 30px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231565c0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+  
+  .estudiante-info-container select:focus {
+    outline: none;
+    border-color: #1e88e5;
+    box-shadow: 0 0 0 2px rgba(30, 136, 229, 0.2);
+  }
+  
+  .info-basica {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  }
+  
+  .info-basica p {
+    margin: 10px 0;
+    color: #37474f;
+    font-size: 15px;
+  }
+  
+  .info-basica p strong {
+    color: #1565c0;
+    font-weight: 500;
+    margin-right: 5px;
+  }
+  
+  .form-grupo {
+    margin-bottom: 15px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  }
+  
+  .form-grupo label {
+    display: block;
+    margin-bottom: 5px;
+    color: #1565c0;
+    font-weight: 500;
+    font-size: 14px;
+  }
+  
+  .form-grupo input {
+    width: calc(100% - 100px);
+    padding: 12px;
+    border: 1px solid #bbdefb;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: all 0.3s;
+    background-color: white;
+  }
+  
+  .form-grupo input:focus {
+    outline: none;
+    border-color: #1e88e5;
+    box-shadow: 0 0 0 2px rgba(30, 136, 229, 0.2);
+  }
+  
+  .form-grupo input[readonly] {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+  }
+  
+  .form-grupo button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: #78909c;
+    color: white;
+    font-size: 13px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .form-grupo button:hover {
+    background-color: #546e7a;
+  }
+  
+  .domicilio-container {
+    background-color: #e3f2fd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .tutor-container {
+    background-color: #e3f2fd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .actividades-lista,
+  .materias-lista {
+    margin-top: 15px;
+    margin-bottom: 30px;
+  }
+  
+  .actividades-lista ul,
+  .materias-lista ul {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+  }
+  
+  .actividades-lista li,
+  .materias-lista li {
+    padding: 12px 15px;
+    background-color: white;
+    border: 1px solid #bbdefb;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    transition: all 0.2s;
+  }
+  
+  .actividades-lista li:hover,
+  .materias-lista li:hover {
+    background-color: #e3f2fd;
+    border-color: #90caf9;
+  }
+  
+  .accion-btn {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    background-color: #1e88e5;
+    color: white;
+    display: block;
+    margin: 20px 0;
+    width: 100%;
+  }
+  
+  .accion-btn:hover {
+    background-color: #1565c0;
+  }
+  
+  .actualizar-btn {
+    background-color: #4caf50;
+    margin-top: 30px;
+  }
+  
+  .actualizar-btn:hover {
+    background-color: #388e3c;
+  }
+  
+  .consultar-btn {
+    background-color: #ff9800;
+  }
+  
+  .consultar-btn:hover {
+    background-color: #f57c00;
+  }
+  
+  @media (max-width: 768px) {
+    .estudiante-info-container {
+      padding: 20px;
+    }
+    
+    .form-grupo input {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    
+    .form-grupo button {
+      margin-left: 0;
+      width: 100%;
+    }
+  }

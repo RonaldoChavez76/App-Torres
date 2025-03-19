@@ -1,84 +1,103 @@
-<h2>Información del Estudiante</h2>
+<div class="estudiante-info-container">
+  <h2>Información del Estudiante</h2>
 
-<!-- Combo para seleccionar el estudiante -->
-<select id="estudiante" [(ngModel)]="estudianteSeleccionado" (change)="obtenerInformacionEstudiante()">
-  <option value="">Selecciona un Estudiante</option>
-  <option *ngFor="let estudiante of estudiantes" [value]="estudiante.matriculaEstudiante">
-    {{ estudiante.nombreCompleto }}
-  </option>
-</select>
+  <!-- Combo para seleccionar el estudiante -->
+  <select id="estudiante" [(ngModel)]="estudianteSeleccionado" (change)="obtenerInformacionEstudiante()">
+    <option value="">Selecciona un Estudiante</option>
+    <option *ngFor="let estudiante of estudiantes" [value]="estudiante.matriculaEstudiante">
+      {{ estudiante.nombreCompleto }}
+    </option>
+  </select>
 
-<!-- Mostrar los detalles del estudiante cuando se selecciona uno -->
-<div *ngIf="estudianteSeleccionado">
-  <h3>Detalles del Estudiante: {{ estudianteInfo.nombreCompleto }}</h3>
+  <!-- Mostrar los detalles del estudiante cuando se selecciona uno -->
+  <div *ngIf="estudianteSeleccionado">
+    <h3>Detalles del Estudiante: {{ estudianteInfo.nombreCompleto }}</h3>
 
-  <p><strong>Matricula:</strong> {{ estudianteInfo.matriculaEstudiante }}</p>
-  <p><strong>Nombre:</strong> {{ estudianteInfo.nombreCompleto }}</p>
-  <p><strong>Fecha de Nacimiento:</strong> {{ estudianteInfo.fechaNacimiento | date }}</p>
-  <p><strong>Sexo:</strong> {{ estudianteInfo.sexo }}</p>
+ <!-- Mostrar la foto del estudiante -->
+ <div *ngIf="estudianteInfo.foto" class="foto-container">
+  <img class="foto-estudiante" [src]="'http://localhost:3000/' + estudianteInfo.foto" alt="Foto del estudiante">
+</div>
 
-  <!-- Correo -->
-  <div>
-    <label for="correos">Correo:</label>
-    <input type="email" id="correos" [(ngModel)]="estudianteInfo.correos[0]" [readonly]="!editableFields.correos" />
-    <button *ngIf="!editableFields.correos" (click)="toggleEdit('correos')">Editar</button>
-  </div>
+    <div class="info-basica">
+      <p><strong>Matricula:</strong> {{ estudianteInfo.matriculaEstudiante }}</p>
+      <p><strong>Nombre:</strong> {{ estudianteInfo.nombreCompleto }}</p>
+      <p><strong>Fecha de Nacimiento:</strong> {{ estudianteInfo.fechaNacimiento | date }}</p>
+      <p><strong>Sexo:</strong> {{ estudianteInfo.sexo }}</p>
+    </div>
 
-  <!-- Teléfonos -->
-  <div>
-    <label for="telefonos">Teléfonos:</label>
-    <input type="text" id="telefonos" [(ngModel)]="estudianteInfo.telefonos[0]" [readonly]="!editableFields.telefonos" />
-    <button *ngIf="!editableFields.telefonos" (click)="toggleEdit('telefonos')">Editar</button>
-  </div>
+    <!-- Correo -->
+    <div class="form-grupo">
+      <label for="correos">Correo:</label>
+      <input type="email" id="correos" [(ngModel)]="estudianteInfo.correos[0]" [readonly]="!editableFields.correos" />
+      <button *ngIf="!editableFields.correos" (click)="toggleEdit('correos')">Editar</button>
+    </div>
 
-  <!-- Domicilio -->
-  <div>
-    <h4>Domicilio:</h4>
-    <label for="domicilio">Calle:</label>
-    <input type="text" id="domicilio" [(ngModel)]="estudianteInfo.domicilio.calle" [readonly]="!editableFields.domicilio" />
-    <button *ngIf="!editableFields.domicilio" (click)="toggleEdit('domicilio')">Editar</button>
-    <label for="colonia">Colonia:</label>
-    <input type="text" id="colonia" [(ngModel)]="estudianteInfo.domicilio.colonia" [readonly]="!editableFields.domicilio" />
-    <button *ngIf="!editableFields.domicilio" (click)="toggleEdit('domicilio')">Editar</button>
-  </div>
+    <!-- Teléfonos -->
+    <div class="form-grupo">
+      <label for="telefonos">Teléfonos:</label>
+      <input type="text" id="telefonos" [(ngModel)]="estudianteInfo.telefonos[0]" [readonly]="!editableFields.telefonos" />
+      <button *ngIf="!editableFields.telefonos" (click)="toggleEdit('telefonos')">Editar</button>
+    </div>
 
-  <!-- Tutores -->
-  <div *ngFor="let tutor of estudianteInfo.tutores; let i = index">
-    <h4>Tutor {{ i + 1 }}:</h4>
-    <label for="tutor-{{i}}">Nombre del tutor:</label>
-    <input type="text" id="tutor-{{i}}" [(ngModel)]="tutor.nombreCompleto" [readonly]="!editableFields.tutores" />
-    <button *ngIf="!editableFields.tutores" (click)="toggleEdit('tutores')">Editar</button>
-    <label for="telefono-{{i}}">Teléfono:</label>
-    <input type="text" id="telefono-{{i}}" [(ngModel)]="tutor.telefonos[0]" [readonly]="!editableFields.tutores" />
-    <button *ngIf="!editableFields.tutores" (click)="toggleEdit('tutores')">Editar</button>
-  </div>
+    <!-- Domicilio -->
+    <div class="domicilio-container">
+      <div class="domicilio-header">
+        <h4>Domicilio:</h4>
+        <button *ngIf="!editableFields.domicilio" (click)="toggleEdit('domicilio')" class="editar-btn">Editar</button>
+      </div>
+      <div class="form-grupo">
+        <label for="domicilio">Calle:</label>
+        <input type="text" id="domicilio" [(ngModel)]="estudianteInfo.domicilio.calle" [readonly]="!editableFields.domicilio" />
+      </div>
+      <div class="form-grupo">
+        <label for="colonia">Colonia:</label>
+        <input type="text" id="colonia" [(ngModel)]="estudianteInfo.domicilio.colonia" [readonly]="!editableFields.domicilio" />
+      </div>
+    </div>
 
-  <!-- Botón para consultar las actividades extracurriculares -->
-  <button (click)="consultarActividadesExtracurriculares()">Consultar Actividades Extracurriculares</button>
+    <!-- Tutores -->
+    <div *ngFor="let tutor of estudianteInfo.tutores; let i = index" class="tutor-container">
+      <div class="tutor-header">
+        <h4>Tutor {{ i + 1 }}:</h4>
+        <button *ngIf="!editableFields.tutores" (click)="toggleEdit('tutores')" class="editar-btn">Editar</button>
+      </div>
+      <div class="form-grupo">
+        <label for="tutor-{{i}}">Nombre del tutor:</label>
+        <input type="text" id="tutor-{{i}}" [(ngModel)]="tutor.nombreCompleto" [readonly]="!editableFields.tutores" />
+      </div>
+      <div class="form-grupo">
+        <label for="telefono-{{i}}">Teléfono:</label>
+        <input type="text" id="telefono-{{i}}" [(ngModel)]="tutor.telefonos[0]" [readonly]="!editableFields.tutores" />
+      </div>
+    </div>
 
-  <!-- Mostrar las actividades extracurriculares -->
-  <div *ngIf="actividadesExtracurriculares.length > 0">
-    <h4>Actividades Extracurriculares:</h4>
-    <ul>
-      <li *ngFor="let actividad of actividadesExtracurriculares">
-        <strong>Actividad:</strong> {{ actividad.nombreActividad }} - <strong>Estatus:</strong> {{ actividad.resultado }}
-      </li>
-    </ul>
-  </div>
+    <!-- Botón para consultar las actividades extracurriculares -->
+    <button class="accion-btn consultar-btn" (click)="consultarActividadesExtracurriculares()">Consultar Actividades Extracurriculares</button>
+
+    <!-- Mostrar las actividades extracurriculares -->
+    <div *ngIf="actividadesExtracurriculares.length > 0" class="actividades-lista">
+      <h4>Actividades Extracurriculares:</h4>
+      <ul>
+        <li *ngFor="let actividad of actividadesExtracurriculares">
+          <strong>Actividad:</strong> {{ actividad.nombreActividad }} - <strong>Estatus:</strong> {{ actividad.resultado }}
+        </li>
+      </ul>
+    </div>
 
     <!-- Botón para consultar las materias asignadas al estudiante -->
-  <button (click)="consultarMaterias()">Consultar Materias</button>
+    <button class="accion-btn consultar-btn" (click)="consultarMaterias()">Consultar Materias</button>
 
-  <!-- Mostrar las materias del estudiante -->
-  <div *ngIf="materiasAsignadas.length > 0">
-    <h4>Materias Asignadas:</h4>
-    <ul>
-      <li *ngFor="let materia of materiasAsignadas">
-        {{ materia }} <!-- Solo mostramos el nombre de la materia -->
-      </li>
-    </ul>
+    <!-- Mostrar las materias del estudiante -->
+    <div *ngIf="materiasAsignadas.length > 0" class="materias-lista">
+      <h4>Materias Asignadas:</h4>
+      <ul>
+        <li *ngFor="let materia of materiasAsignadas">
+          {{ materia }} <!-- Solo mostramos el nombre de la materia -->
+        </li>
+      </ul>
+    </div>
+
+    <!-- Botón para actualizar la información -->
+    <button class="accion-btn actualizar-btn" (click)="actualizarInformacionPersonal()">Actualizar Información</button>
   </div>
-
-  <!-- Botón para actualizar la información -->
-  <button (click)="actualizarInformacionPersonal()">Actualizar Información</button>
 </div>

@@ -7,6 +7,7 @@ const profesorRoutes = require('./profesorRoutes')
 const serviciosRoutes = require('./serviciosEscolaresRoutes')
 
 router.use('/estudiantes', estudianteRoutes);
+router.use('/profesores', profesorRoutes);
 router.use('/observaciones', observacionRoutes);
 // Rutas de profesores de actividades extracurriculares
 router.use('/api/profesores', profesorRoutes);
