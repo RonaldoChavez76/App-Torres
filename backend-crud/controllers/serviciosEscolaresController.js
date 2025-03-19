@@ -1,5 +1,6 @@
 //Controladores para servicios escolares
 const Estudiante = require('../models/Estudiante');
+const Carrera = require('../models/Carrera');
 const path = require('path');
 
 
@@ -86,7 +87,6 @@ exports.consultarInformacionPersonal = async (req, res) => {
 
 
 
-// Actualizar información personal del alumno
 exports.updateEstudiante = async (req, res) => {
   try {
     const matricula = req.params.matricula;  // Obtener la matrícula desde los parámetros de la URL
@@ -95,6 +95,20 @@ exports.updateEstudiante = async (req, res) => {
     // Eliminar los campos que no deben enviarse
     delete updatedData._id;
     delete updatedData.__v;
+
+    // Parsear campos que llegan como string (porque se enviaron como JSON.stringify en el FormData)
+    if (updatedData.domicilio && typeof updatedData.domicilio === 'string') {
+      updatedData.domicilio = JSON.parse(updatedData.domicilio);
+    }
+    if (updatedData.telefonos && typeof updatedData.telefonos === 'string') {
+      updatedData.telefonos = JSON.parse(updatedData.telefonos);
+    }
+    if (updatedData.correos && typeof updatedData.correos === 'string') {
+      updatedData.correos = JSON.parse(updatedData.correos);
+    }
+    if (updatedData.tutores && typeof updatedData.tutores === 'string') {
+      updatedData.tutores = JSON.parse(updatedData.tutores);
+    }
 
     if (!updatedData || Object.keys(updatedData).length === 0) {
       return res.status(400).json({ error: "No se proporcionaron datos para actualizar." });
@@ -113,7 +127,6 @@ exports.updateEstudiante = async (req, res) => {
       { new: true }
     );
 
-    // Si no se encuentra el estudiante, retornar un error
     if (!updatedEstudiante) {
       return res.status(404).json({ error: "Estudiante no encontrado" });
     }
@@ -124,6 +137,9 @@ exports.updateEstudiante = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+
+
 
 
 
@@ -279,6 +295,19 @@ exports.createEstudiante = async (req, res) => {
   } catch (err) {
     console.error("Error al crear estudiante:", err);
     res.status(500).json({ error: "Error interno del servidor" });
+  }
+};
+
+exports.obtenerCarreras = async (req, res) => {
+  try {
+    const carreras = await Carrera.find({});
+    if (!carreras || carreras.length === 0) {
+      return res.status(404).json({ mensaje: 'No se encontraron carreras' });
+    }
+    res.json({ carreras });
+  } catch (error) {
+    console.error('Error al obtener carreras:', error);
+    res.status(500).json({ mensaje: 'Error al obtener carreras', error });
   }
 };
 
