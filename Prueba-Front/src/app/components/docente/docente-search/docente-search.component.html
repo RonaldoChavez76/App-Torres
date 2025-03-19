@@ -1,28 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buscar Docente</title>
 </head>
 <body>
-
-    <h2>Buscar Docente</h2>
-
-    <!-- Buscar docentes -->
-    <input type="text" [(ngModel)]="filtro" placeholder="Buscar docente..." />
-
-    <select [(ngModel)]="docenteSeleccionado">
-        <option *ngFor="let docente of docentes | filterDocentes: filtro" [value]="docente._id">
+  <div class="container">
+    <h2>👨‍🏫 Buscar Docente</h2>
+    
+    <div class="search-container">
+      <div class="form-group">
+        <label>Buscar docente:</label>
+        <input type="text" [(ngModel)]="filtro" placeholder="Nombre del docente..." class="search-input" />
+      </div>
+      
+      <div class="form-group">
+        <label>Seleccionar docente:</label>
+        <select [(ngModel)]="docenteSeleccionado" class="select-docente">
+          <option *ngFor="let docente of docentes | filterDocentes: filtro" [value]="docente._id">
             {{ docente.nombre }}
-        </option>
-    </select>
-
-    <!-- Botón para agregar observación -->
-    <button (click)="cargarMaterias()">Agregar Observación</button>
-
-    <!-- Botón para consultar observaciones -->
-    <button (click)="consultarObservaciones()">Consultar Observaciones</button>
-
+          </option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="button-group">
+      <button (click)="cargarMaterias()" class="button button-primary">
+        <span class="button-icon">➕</span> Agregar Observación
+      </button>
+      
+      <button (click)="consultarObservaciones()" class="button button-secondary">
+        <span class="button-icon">🔍</span> Consultar Observaciones
+      </button>
+    </div>
+  </div>
 </body>
 </html>

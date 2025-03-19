@@ -45,7 +45,12 @@ export class ServiciosEscolaresService {
       console.log('Actualizando estudiante con matrícula:', matriculaEstudiante);  // Depuración
       return this.http.put<any>(`${this.apiUrl}/edit/${matriculaEstudiante}`, updatedData);
     }
-  
+    
+
+    // Método para obtener todas las carreras
+  getCarreras(): Observable<any> {
+    return this.http.get<any>(this.apiUrl);
+  }
   
     // Método para eliminar definitivamente un estudiante
     eliminarEstudianteDefinitivo(id: string): Observable<any> {

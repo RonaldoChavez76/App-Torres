@@ -27,6 +27,8 @@ export class ProfesorService {
     return this.http.get(`${this.apiUrl}/todos`);
   }
 
+  
+
   // Actualizar el estatus de una actividad
   actualizarEstatus(data: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/actualizar-estatus`, data); // Asegúrate de que esta ruta exista en el backend
